@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  app:
+    image: node:18.13.0-bullseye
+    command: npm run start
+    container_name: flowd-server-app
+    ports:
+      - 3001:3001
+    networks:
+      flowd:
+        aliases:
+          - server
+    working_dir: /app
+    volumes:
+      - ./:/app
+
+  studio:
+    image: node:18.13.0-bullseye
+    command: npm run prisma/studio
+    container_name: flowd-server-studio
+    ports:
+      - 5555:5555
+    networks:
+      flowd:
+        aliases:
+          - studio
+    working_dir: /app
+    volumes:
+      - ./:/app
+
+networks:
+  flowd:
+    external: true

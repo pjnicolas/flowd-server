@@ -1,0 +1,14 @@
+-- CreateTable
+CREATE TABLE "Task" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "History" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "start" DATETIME NOT NULL,
+    "duration" INTEGER,
+    "taskId" INTEGER NOT NULL,
+    CONSTRAINT "History_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "Task" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
