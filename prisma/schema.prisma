@@ -13,13 +13,14 @@ datasource db {
 model Task {
   id        Int     @id @default(autoincrement())
   name      String
+  start     DateTime?
   history   History[]
 }
 
 model History {
   id        Int     @id @default(autoincrement())
   start     DateTime
-  duration  Int?
+  duration  Int
   task      Task    @relation(fields: [taskId], references: [id])
   taskId    Int
 }

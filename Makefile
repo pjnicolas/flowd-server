@@ -17,3 +17,6 @@ install:
 
 prisma/generate:
 	docker-compose run --rm app npx prisma generate
+
+prisma/migrate:
+	docker-compose run --rm app npx prisma migrate dev
