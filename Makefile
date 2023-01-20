@@ -1,4 +1,4 @@
-.PHONY: up down logs build install prisma/generate
+.PHONY: up down logs build install prisma/generate prisma/migrate
 
 up:
 	docker-compose up -d
