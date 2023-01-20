@@ -1,10 +1,19 @@
 import express from 'express'
-import { API_PORT } from './env'
+import helmet from 'helmet'
+import { API_PORT, API_WHITELIST } from './env'
 import { TaskRouter } from './task'
 const app = express()
 
 app.use(express.json())
-app.use(express.urlencoded())
+app.use(express.urlencoded({ extended: true }))
+app.use(helmet())
+app.use((req, res, next) => {
+  const origin = req.get('origin') || '';
+  if (API_WHITELIST.includes(origin)) {
+    res.set('Access-Control-Allow-Origin', origin);
+  }
+  next()
+})
 
 app.use(TaskRouter)
 
