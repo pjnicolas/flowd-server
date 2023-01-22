@@ -1,5 +1,6 @@
 import express from 'express'
 import helmet from 'helmet'
+import cors from 'cors'
 import { API_PORT, API_WHITELIST } from './env'
 import { TaskRouter } from './task'
 const app = express()
@@ -7,13 +8,15 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(helmet())
-app.use((req, res, next) => {
-  const origin = req.get('origin') || '';
-  if (API_WHITELIST.includes(origin)) {
-    res.set('Access-Control-Allow-Origin', origin);
+app.use(cors({
+  origin: (origin, callback) => {
+    if (origin && API_WHITELIST.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
   }
-  next()
-})
+}))
 
 app.use(TaskRouter)
 
